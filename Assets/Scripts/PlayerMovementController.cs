@@ -39,9 +39,4 @@ public class PlayerMovementController : MonoBehaviour
     {
         
     }
-
-    public void ReloadGame()
-    {
-        Debug.Log("Reloading game");
-    }
 }

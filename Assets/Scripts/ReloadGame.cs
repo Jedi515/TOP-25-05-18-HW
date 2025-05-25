@@ -13,6 +13,12 @@ public class ReloadGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+
+    public void Reload()
+    {
+        Debug.Log("Reloading game");
     }
 }
