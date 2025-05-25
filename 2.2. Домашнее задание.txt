@@ -1,0 +1,7 @@
+# Компонент Character
+
+1. Добавьте Character с полем HP, IsDead и методом GetDamage(float damage)
+2. Создайте новый скрипт для игрока, который наследуется от `MonoBehaviour`. Задача скпипта:
+- получить и хранить ссылку на компонент Character(как PlayerMove с CharacterController) и в методе Update вызывать метод GetDamage(10*...) у объекта Character так, чтобы в секунду отнималось 10 урона.
+
+Обязательно: пусть новый скрипт требует чтобы объект имел CharacterController.

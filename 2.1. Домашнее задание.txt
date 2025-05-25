@@ -1,0 +1,78 @@
+## Домашнее задание  
+Создайте скрипт `MoveRotation`:
+- клавиши WS (Vertical) нужны для передвижения вперед и назад
+- клавиши AD (Horizontal) нужны для вращения персонажа
+
+Подсказка: 
+- скопируйте код с Передвижения и измените горизонтальное движение на горизонтальное вращение.  
+Вращение: transform.Rotate
+
+## Приложение  
+
+```cs
+// Файл Moving.cs
+using UnityEngine;
+
+public class Moving : MonoBehaviour
+{
+    public float speed = 2f;
+    public float gravity = -9.8f;
+    private CharacterController _charController;
+    void Start()
+    {
+        _charController = GetComponent<CharacterController>();
+    }
+
+    void Update()
+    {
+        float dx = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+        float dz = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+
+        Vector3 movement = new Vector3 (dx, gravity, dz);
+        movement = Vector3.ClampMagnitude(movement,speed);
+
+        movement.y = gravity;
+
+        movement *= Time.deltaTime;
+        movement = transform.TransformDirection(movement);
+        _charController.Move(movement);
+    }
+}
+
+```
+
+```cs
+// Файл Mouse.cs
+using UnityEngine;
+
+public class Mouse : MonoBehaviour
+{
+    public enum RotAxes { Vertical, Horizontal }
+
+    public RotAxes axes = RotAxes.Horizontal;
+    public float speed = 2f;
+    public float minY = -45f;
+    public float maxY = 45f;
+
+    private float currentVert;
+    void Update()
+    {
+        if (axes == RotAxes.Horizontal)
+        {
+            float dx = Input.GetAxis("Mouse X") * speed * Time.deltaTime;
+            transform.Rotate(0, dx, 0);
+        }
+        else if (axes == RotAxes.Vertical)
+        {
+            float dy = Input.GetAxis("Mouse Y") * speed * Time.deltaTime;
+            currentVert -= dy;
+            currentVert = Mathf.Clamp(currentVert, minY, maxY);
+
+            float currentX = transform.localEulerAngles.y;
+
+            transform.localEulerAngles = new Vector3(
+                currentVert, currentX, 0);
+        }
+    }
+}
+```
